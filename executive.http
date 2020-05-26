@@ -1,0 +1,257 @@
+### Get Banks
+
+GET http://localhost:4004/executive/Banks HTTP/1.1\
+//Authorization: Basic YWRtaW46
+
+
+### Check books entity that stock was reduced
+GET http://localhost:4004/executive/State
+
+
+### Create Banks
+POST http://localhost:4004/executive/Banks HTTP/1.1
+Content-Type: application/json
+
+{ 
+    "bankID": 112,
+    "bankname": "YesBank",
+    "state_ID" : 401,
+    "city_ID" : 502
+}
+
+
+
+###Del 
+
+delete http://localhost:4004/executive/Banks/112
+Content-Type: application/json
+
+
+### get Customers
+get http://localhost:4004/executive/Customers
+
+###
+delete http://localhost:4004/executive/Customers/230
+
+###Create Customers
+
+
+POST http://localhost:4004/executive/Customers HTTP/1.1
+Content-Type: application/json
+
+{
+    "custID" : 422,
+    "firstname" : "Kavya",
+    "lastname" : "Selvaraj",
+    "address" : "Kuppaiah Street",
+    "state_ID" : 401,
+    "city_ID" : 502,
+    "bank_bankID" : 112
+}
+
+
+### Update
+put http://localhost:4004/executive/Customers/422 HTTP/1.1
+Content-Type: application/json
+
+{
+    "firstname" : "Kavya",
+    "lastname" : "Selvaraj",
+    "bank_bankID" : 101,
+    "address" : "Kuppaiah Street",
+    "state_ID" : 401,
+    "city_ID" : 502,
+    "accounts" : [ {
+        "accountid" : 1000000000004500,
+        "Balance" : 45,
+        "account_status" : "Active",
+        "account_type" : "Savings"
+     } ]
+}
+
+###DELETE
+
+DELETE http://localhost:4004/executive/Customers/422 HTTP/1.1
+
+
+### Get Accounts
+get http://localhost:4004/executive/Accounts
+
+
+
+### Create Account
+
+POST http://localhost:4004/executive/Accounts
+Content-Type: application/json
+
+{
+    "accountid" : 1000000000004500,
+    "customers_custID" : 422,
+    "Balance" : 45000,
+    "account_status" : "Active",
+    "account_type" : "Savings"
+}
+
+###UPDATE
+
+PUT http://localhost:4004/executive/Accounts/1000000000004500
+Content-Type: application/json
+
+{
+    "customers_custID" : 201,
+    "Balance" : 450,
+    "account_status" : "Active",
+    "account_type" : "Savings"
+}
+
+###Delete
+
+delete http://localhost:4004/executive/Accounts/1000000000004500
+
+
+
+###get Accounts
+GET https://localhost:4004/executive/Accounts
+
+
+###GET
+
+get http://localhost:4004/executive/Transections/a9ac2c87-7844-471a-bd09-7829e1850e0f
+
+###create Transactions
+
+POST http://localhost:4004/executive/Transections HTTP/1.1
+Content-Type: application/json
+
+{
+    "accounts_accountid" : 1000000000001100,
+    "type" : "Deposit",
+    "description" : "Check Deposit",
+    "amount" : 44
+}
+
+### Transection Update
+PATCH  http://localhost:4004/executive/Transections/89192335-30a9-4e21-9b21-839934101bff HTTP/1.1
+Content-Type: application/json
+
+{
+    "type" : "Deposit",
+    "description" : "Check Deposit",
+    "amount" : 440
+}
+
+
+### Create Account
+
+PUT http://localhost:4004/executive/Accounts
+Content-Type: application/json
+
+{
+    "accountid" : 1000000000001200,
+    "customers_custID" : 230,
+    "Balance" : 45,
+    "account_status" : "Active",
+    "account_type" : "Savings"
+}
+
+###PUT
+PUT http://localhost:4004/executive/Banks/117
+Content-Type: application/json
+
+{
+    "bankname": "Mahendra Ba"
+}
+
+### get
+
+get http://localhost:4004/executive/Banks/117 HTTP/1.1
+
+
+###Delete 
+get localhost:4004/executive/Customers/230
+
+###Create it at once
+
+POST http://localhost:4004/executive/Banks HTTP/1.1
+Content-Type: application/json
+
+{ 
+    "bankID": 117,
+    "bankname": "Mahendra Bank",
+    "state_ID" : 401,
+    "city_ID" : 502,
+    "customers" : [
+        {
+        "custID" : 230,
+        "firstname" : "Dhnees",
+        "lastname" : "naaraj",
+        "address" : "asff Street",
+        "state_ID" : 401,
+        "city_ID" : 502,
+        "accounts" : [            
+            {
+                "accountid" : 1000000000000800,
+                "Balance" : 45,
+                "account_status" : "Active",
+                "account_type" : "Savings",
+                "transections" : [
+                    {
+                        "type" : "Deposit",
+                        "description" : "Check Deposit",
+                        "amount" : 45
+                    }
+                ]
+            },
+            {
+                "accountid" : 1000000000000900,
+                "Balance" : 45,
+                "account_status" : "Active",
+                "account_type" : "Current",
+                "transections" : [
+                    {
+                        "type" : "withdraw",
+                        "description" : "Check Deposit",
+                        "amount" : 45
+                    }
+                ]
+            }
+        ]
+        },
+        {
+        "custID" : 231,
+        "firstname" : "Dhaneesha",
+        "lastname" : "narayanaraj",
+        "address" : "Kuppaiah Street",
+        "state_ID" : 401,
+        "city_ID" : 502,
+        "accounts" : [            
+            {
+                "accountid" : 1000000000001100,
+                "Balance" : 45,
+                "account_status" : "Active",
+                "account_type" : "Savings",
+                "transections" : [
+                    {
+                        "type" : "Deposit",
+                        "description" : "Check Deposit",
+                        "amount" : 45
+                    }
+                ]
+            },
+            {
+                "accountid" : 1000000000001200,
+                "Balance" : 45,
+                "account_status" : "Active",
+                "account_type" : "Current",
+                "transections" : [
+                    {
+                        "type" : "withdraw",
+                        "description" : "Check Deposit",
+                        "amount" : 45
+                    }
+                ]
+            }
+        ]
+        }
+    ] 
+}

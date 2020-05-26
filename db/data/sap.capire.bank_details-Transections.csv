@@ -1,0 +1,9 @@
+accounts.accountid;type;description;date;amount
+1000000000000003;"deposit";"May Salary";2020-05-22;55000
+1000000000000003;"withdraw";"May Salary";2020-05-22;45000
+1000000000000001;"deposit";"May Salary";2020-05-22;55000
+1000000000000001;"withdraw";"May Salary";2020-05-22;45000
+1000000000000002;"deposit";"May Salary";2020-05-22;55000
+1000000000000002;"withdraw";"May Salary";2020-05-22;45000
+1000000000000004;"deposit";"May Salary";2020-05-22;55000
+1000000000000004;"withdraw";"May Salary";2020-05-22;45000

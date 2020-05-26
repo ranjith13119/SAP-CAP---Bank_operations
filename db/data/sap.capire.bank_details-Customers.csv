@@ -1,0 +1,5 @@
+custID;firstname;lastname;age;dateOfBirth;bank.bankID;address;state.ID;city.ID;status;message
+201;"Dharunesh";"NarayanaRaj";25;1996-05-02;101;"W3,kulalar Street, markaiyankottai";401;503;"Active";"Customer Created Successfully"
+202;"Vinitha";"Ayyavu";10;2006-03-24;102;"Kuppaiah Street";401;501;"Active";"Customer Created Successfully"
+203;"Kavya";"Selvaraj";10;2006-03-24;103;"Kuppaiah Street";401;501;"Active";"Customer Created Successfully"
+204;"Dhaneesha";"NarayanaRaj";10;2006-03-24;104;"Kuppaiah Street";401;501;"Active";"Customer Created Successfully"

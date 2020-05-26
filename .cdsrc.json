@@ -1,0 +1,52 @@
+{
+    "auth": {
+        "passport": {
+            "strategy": "mock",
+            "users": {
+                "Ranjith": {
+                    "password": "123",
+                    "ID": "200",
+                    "roles": [
+                        "authenticated-user",   
+                        "Manager"
+                    ]
+                },
+                "Dharunesh": {
+                    "password": "123",
+                    "ID": "201",
+                    "roles": [
+                        "authenticated-user",
+                        "employee"
+                    ],
+                    "xs.user.attributes": {
+                        "bankID": 101
+                    }
+                },
+                "Vinitha": {
+                    "password": "123",
+                    "ID": "202",
+                    "roles": [
+                        "authenticated-user",
+                        "customer"
+                    ]
+                },
+                "Kavya": {
+                    "password": "123",
+                    "ID": "203",
+                    "roles": [
+                        "authenticated-user",
+                        "customer"
+                    ]
+                },
+                "Dhaneesha": {
+                    "password": "123",
+                    "ID": "204",
+                    "roles": [
+                        "authenticated-user",
+                        "customer"
+                    ]
+                }
+            }
+        }
+    }
+}

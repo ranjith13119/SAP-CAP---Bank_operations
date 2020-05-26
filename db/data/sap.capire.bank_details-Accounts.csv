@@ -1,0 +1,5 @@
+accountid;balance;customers.custID;account_type;account_status;message
+1000000000000001;5000;201;"Savings";"Active";"Account Created Successfully"
+1000000000000002;45000;202;"Savings";"Active";"Account Created Successfully"
+1000000000000003;78000;203;"Current";"Active";"Account Created Successfully"
+1000000000000004;4565;203;"Savings";"Active";"Account Created Successfully"

@@ -1,0 +1,5 @@
+bankID;bankname;state_ID;city_ID;status
+101;"SBI";401;501;"Active"
+102;"Indian";401;502;"Active"
+104;"Canara";401;503;"Active"
+103;"Axis";401;504;"Active"

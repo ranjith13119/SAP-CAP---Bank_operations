@@ -1,0 +1,16 @@
+{
+  "welcomeFile": "/index.html",
+  "authenticationMethod": "none",
+  "routes": [
+    {
+      "source": "^/customer/(.*)$",
+      "target": "/customer/$1",
+      "destination": "odata",
+      "csrfProtection": false
+    },
+    {
+      "source": "^(.*)",
+      "localDir": "webapp"
+    }
+  ]
+}
