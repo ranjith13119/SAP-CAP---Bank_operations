@@ -32,6 +32,30 @@ service ExecutiveService { //@(requires: 'authenticated-user' ){
         Capabilities : {
             InsertRestrictions     : {Insertable : true},
             DeleteRestrictions     : {Deletable : true},
+            UpdateRestrictions  : {
+                $Type : 'Capabilities.UpdateRestrictionsType',
+                RequiredProperties : [
+                    account_status,
+                    accountid, 
+                    account_type,
+                    custID,
+                    city_ID, state_ID,
+                    firstname,
+                    lastname
+                ]
+            },
+            InsertRestrictions : {                          // providing the mandatory fields while creating an item
+                $Type : 'Capabilities.InsertRestrictionsType',
+                RequiredProperties : [
+                    account_status,
+                    accountid, 
+                    account_type,
+                    custID,
+                    city_ID, state_ID,
+                    firstname,
+                    lastname
+                ]
+            },
             NavigationRestrictions : {RestrictedProperties : [
                 {
                     NavigationProperty : city,
@@ -44,7 +68,13 @@ service ExecutiveService { //@(requires: 'authenticated-user' ){
                         $Type     : 'Capabilities.DeleteRestrictionsType',
                         Deletable : false,
                     }
+                },
+                {
+                NavigationProperty : customers.bank,
+                FilterRestrictions : {
+                    Filterable : false
                 }
+            }
             ]},
             FilterRestrictions     : {FilterExpressionRestrictions : [{
                 Property           : createdAt,
@@ -149,6 +179,19 @@ service ExecutiveService { //@(requires: 'authenticated-user' ){
                 ],
                 Label : 'City Details'
             },
+            FieldGroup #MultiEdit                          : { // the grop to update in the list report applicatio. Have to enbale the same in settings
+                Data  : [
+                    {
+                        $Type : 'UI.DataField',
+                        Value : city_ID
+                    },
+                    {
+                        $Type : 'UI.DataField',
+                        Value : state_ID
+                    },
+                ],
+                Label : 'City Details'
+            },
             FilterFacets                                    : [{
                 $Type  : 'UI.ReferenceFacet',
                 Target : '@UI.FieldGroup#AccountFltr'
@@ -206,6 +249,7 @@ service ExecutiveService { //@(requires: 'authenticated-user' ){
                     $Type             : 'UI.DataField',
                     Value             : balance,
                     ![@UI.Importance] : #High,
+                    Criticality :   balance,
                     Label             : '{i18n>acc.Balance}'
                 },
                 {
@@ -225,7 +269,7 @@ service ExecutiveService { //@(requires: 'authenticated-user' ){
                     Label : 'Repository'
                 },
                 {
-                    $Type              : 'UI.DataFieldForAction',
+                    $Type              : 'UI.DataFieldForAction',   // will appear at the top table header
                     Label              : 'Trigger Action',
                     Action             : 'ExecutiveService.EntityContainer/triggerAction',
                     InvocationGrouping : #Isolated
