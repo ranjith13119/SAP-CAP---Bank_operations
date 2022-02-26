@@ -105,7 +105,7 @@ annotate Customer.Accounts with @(
                 ]
             }
         ],
-        DataPoint#Balance: { Value: balance , Label:'{i18n>emp.Balance}' },
+        DataPoint#Balance: { Value: balance },
         FieldGroup#AccountFacet: { 
             Data:[
                 {$Type: 'UI.DataField', Value: accountid },

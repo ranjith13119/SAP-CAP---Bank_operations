@@ -45,7 +45,11 @@ service ExecutiveService { //@(requires: 'authenticated-user' ){
                         Deletable : false,
                     }
                 }
-            ]}
+            ]},
+            FilterRestrictions     : {FilterExpressionRestrictions : [{
+                Property           : createdAt,
+                AllowedExpressions : 'SingleRange'
+            }]}
         },
 
         UI           : {
@@ -55,7 +59,8 @@ service ExecutiveService { //@(requires: 'authenticated-user' ){
                 account_type,
                 custID,
                 firstname,
-                lastname
+                lastname,
+                createdAt
             ],
             FieldGroup #BankDetail                          : {Data : [
                 {
@@ -107,14 +112,60 @@ service ExecutiveService { //@(requires: 'authenticated-user' ){
                     $Type        : 'UI.SelectOptionType',
                     PropertyName : balance,
                     Ranges       : [{
-                        Sign   : balance,
                         $Type  : 'UI.SelectionRangeType',
+                        Sign   : #I,
                         Option : #GE,
                         Low    : '20000'
                     }]
                 }]
             },
-
+            FieldGroup #AccountFltr                         : { // Filter Group in Filter dialog
+                Data  : [
+                    {
+                        $Type : 'UI.DataField',
+                        Value : accountid
+                    },
+                    {
+                        $Type : 'UI.DataField',
+                        Value : account_type
+                    },
+                    {
+                        $Type : 'UI.DataField',
+                        Value : account_status
+                    }
+                ],
+                Label : 'Account Details'
+            },
+            FieldGroup #CityFilter                          : { // Filter Group in Filter dialog
+                Data  : [
+                    {
+                        $Type : 'UI.DataField',
+                        Value : city_ID
+                    },
+                    {
+                        $Type : 'UI.DataField',
+                        Value : state_ID
+                    },
+                ],
+                Label : 'City Details'
+            },
+            FilterFacets                                    : [{
+                $Type  : 'UI.ReferenceFacet',
+                Target : '@UI.FieldGroup#AccountFltr'
+            }],
+            QuickViewFacets                                 : [ // showing records as grouped in dialog
+                {
+                    $Type  : 'UI.ReferenceFacet',
+                    Label  : 'Main Contact Person',
+                    Target : 'customers/@Communication.Contact'
+                },
+                {
+                    $Type  : 'UI.ReferenceFacet',
+                    Label  : 'Phone',
+                    Target : '@UI.DataPoint#FilterLink     '
+                }
+            ],
+            DataPoint #FilterLink                                   : {Value : phone, },
             DataPoint #Activity                             : {
                 Value         : 'activity',
                 TargetValue   : 5,
@@ -158,6 +209,22 @@ service ExecutiveService { //@(requires: 'authenticated-user' ){
                     Label             : '{i18n>acc.Balance}'
                 },
                 {
+                    $Type  : 'UI.DataFieldForAnnotation',
+                    Label  : 'Recent Avtivity',
+                    Target : '@UI.DataPoint#Activity'
+                },
+                {
+                    $Type  : 'UI.DataFieldForAnnotation',
+                    Target : '@UI.FieldGroup#BankDetail',
+                    Label  : 'Bank information'
+                },
+                {
+                    $Type : 'UI.DataFieldWithUrl',
+                    Url   : 'https://github.com/ranjith13119/SAP-CAP---Bank_operations.git',
+                    Value : 'Bank-Git Repo',
+                    Label : 'Repository'
+                },
+                {
                     $Type              : 'UI.DataFieldForAction',
                     Label              : 'Trigger Action',
                     Action             : 'ExecutiveService.EntityContainer/triggerAction',
@@ -170,47 +237,44 @@ service ExecutiveService { //@(requires: 'authenticated-user' ){
                     Action         : 'Detail',
                     Inline         : false
                 },
-                {
-                    $Type  : 'UI.DataFieldForAnnotation',
-                    Label  : 'Recent Avtivity',
-                    Target : '@UI.DataPoint#Activity'
-                },
-                {
-                    $Type  : 'UI.DataFieldForAnnotation',
-                    Target : '@UI.FieldGroup#BankDetail',
-                    Label  : 'Bank information'
-                }
             ]
         }
     );
 
     annotate ExecutiveService.Customers with @(
-
-    Communication.Contact : {
-        fn    : {$edmJson : {
-            $Apply    : [
-                'firstname',
-                'lastname'
-            ],
-            $Function : 'odata.concat',
-        }, },
-        tel   : [
-            {
-                type : #fax,
-                uri  : '+91-8072707817'
-            },
-            {
-                type : [
-                    #preferred,
-                    #work
+        FieldGroup #FilterGrp : {
+            Data  : [{
+                $Type : 'UI.DataField',
+                Value : CityName
+            }],
+            Label : 'City Using Field Group'
+        },
+        Communication.Contact : {
+            fn    : {$edmJson : {
+                $Apply    : [
+                    'firstname',
+                    'lastname'
                 ],
-                uri  : '+91-8072707817'
-            },
-        ],
-        email : [{
-            type    : [ #work],
-            address : 'ranjith13119@gmail.com'
-        }]
-    });
+                $Function : 'odata.concat',
+            }, },
+            tel   : [
+                {
+                    type : #fax,
+                    uri  : '+91-8072707817'
+                },
+                {
+                    type : [
+                        #preferred,
+                        #work
+                    ],
+                    uri  : '+91-8072707817'
+                },
+            ],
+            email : [{
+                type    : [ #work],
+                address : 'ranjith13119@gmail.com'
+            }]
+        }
+    );
 
 };
