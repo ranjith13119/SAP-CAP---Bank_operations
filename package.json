@@ -17,18 +17,20 @@
         "passport-http": "^0.3.0"
     },
     "devDependencies": {
+        "@sap/ux-specification": "^1.96.4",
         "sqlite3": "^5.0.2"
     },
     "engines": {
         "node": "^14"
     },
     "scripts": {
-        "start": "cds run"
+        "start": "cds run",
+        "undeploy": "cf undeploy bank_tasks --delete-services --delete-service-keys"
     },
     "cds": {
         "requires": {
-            "--db": {
-                "kind": "hana"
+            "db": {
+                "kind": "sql"
             }
         },
         "hana": {
@@ -37,5 +39,8 @@
         "features": {
             "fiori_preview": true
         }
-    }
+    },
+    "sapux": [
+        "app/accounts_details"
+    ]
 }
