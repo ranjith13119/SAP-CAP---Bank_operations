@@ -1,32 +1,41 @@
 {
-  "name": "bank_tasks",
-  "version": "1.0.0",
-  "description": "A simple CAP project.",
-  "repository": "<Add your repository here>",
-  "license": "UNLICENSED",
-  "private": true,
-  "dependencies": {
-    "@sap/cds": "^4",
-    "express": "^4"
-  },
-  "scripts": {
-    "start": "npx cds run"
-  },
-  "cds": {
-    "--requires": {
-      "db": {
-        "kind": "sql"
-      },
-      "API_BUSINESS_PARTNER": {
-        "kind": "odata",
-        "model": "srv/external/API_BUSINESS_PARTNER",
-        "--credentials": {
-          "destination": "cap-api098"
+    "name": "bank_tasks",
+    "version": "1.0.0",
+    "description": "A simple Full StacK APp using (Fiori Elements + CAP)project.",
+    "repository": "<Add your repository here>",
+    "license": "UNLICENSED",
+    "private": true,
+    "dependencies": {
+        "@sap/cds": "^5",
+        "express": "^4",
+        "hdb": "^0.18.3",
+        "@sap/cds-odata-v2-adapter-proxy": "^1.4.33",
+        "@sap/xsenv": "^2.2.0",
+        "@sap/xssec": "^2.2.5",
+        "@sap/audit-logging": "^3.1.0",
+        "passport": "^0.4.1",
+        "passport-http": "^0.3.0"
+    },
+    "devDependencies": {
+        "sqlite3": "^5.0.2"
+    },
+    "engines": {
+        "node": "^14"
+    },
+    "scripts": {
+        "start": "cds run"
+    },
+    "cds": {
+        "requires": {
+            "--db": {
+                "kind": "hana"
+            }
+        },
+        "hana": {
+            "deploy-format": "hdbtable"
+        },
+        "features": {
+            "fiori_preview": true
         }
-      },
-      "--messaging": {
-        "kind": "enterprise-messaging"
-      }
     }
-  }
 }

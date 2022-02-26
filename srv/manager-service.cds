@@ -1,7 +1,6 @@
 using {sap.capire.bank_details as my} from '../db/schema';
 
-service ExecutiveService { //@(requires: 'authenticated-user' ){
-
+service ExecutiveService { 
 
     entity Accounts //@(restrict: [ { grant: '*', to: 'Manager'}])
     as projection on my.Accounts {
