@@ -8,9 +8,13 @@ service Customer @(requires: ['authenticated-user']) {
         firstname,
         lastname,
         dateOfBirth,
+        @readonly accounts.accountid as AccountId,
+        @readonly accounts.balance as Balance,
+        @readonly accounts.account_type as AccountType,
+        @readonly accounts.account_status as AccountStatus,
         @readonly bank.bankID as BankId,
         @readonly bank.bankname as BankName,
-        @readonly status as Accountstatus,
+        @readonly status as ProfileStatus,
         address,    
         city.name as CityName,
         state.name as StateName,
@@ -19,7 +23,8 @@ service Customer @(requires: ['authenticated-user']) {
         status,
         message,
         city,
-        bank
+        bank,
+        phone
     };
     
     entity Accounts @(restrict: [ { grant: ['READ', 'UPDATE'], to: 'customer', where: 'custID = $user'}])
@@ -34,16 +39,17 @@ service Customer @(requires: ['authenticated-user']) {
         customers.address,
         customers.city,
         customers.state,
+        customers.phone,
         @readonly customers.bank.bankID,
         @readonly customers.bank.bankname,
         message,
         createdAt,
-        transections,
+        transactions,
         customers
     };
 
-    entity Transections @(restrict: [ { grant: ['READ', 'CREATE'], to: 'customer'}])
-    as projection on my.Transections;
+    entity Transactions @(restrict: [ { grant: ['READ', 'CREATE'], to: 'customer'}])
+    as projection on my.Transactions;
 }
 
 annotate Customer.Accounts with @(
@@ -74,7 +80,7 @@ annotate Customer.Accounts with @(
                 $Type: 'UI.CollectionFacet',
                 Label: '{i18n>emp.AccountTransectionInformation}',
                 Facets: [
-                    {$Type: 'UI.ReferenceFacet', Target: 'transections/@UI.LineItem'}
+                    {$Type: 'UI.ReferenceFacet', Target: 'transactions/@UI.LineItem'}
                 ]
             },
             {
@@ -153,7 +159,7 @@ annotate Customer.Accounts with @(
     }
 );
 
-annotate Customer.Transections with @ (
+annotate Customer.Transactions with @ (
     UI : {
          HeaderInfo : {
            TypeName :  '{i18n>emp.TransectionTypeName}',

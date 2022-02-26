@@ -19,8 +19,6 @@ Content-Type: application/json
     "city_ID" : 502
 }
 
-
-
 ###Del 
 
 delete http://localhost:4004/executive/Banks/112
@@ -116,11 +114,11 @@ GET https://localhost:4004/executive/Accounts
 
 ###GET
 
-get http://localhost:4004/executive/Transections/a9ac2c87-7844-471a-bd09-7829e1850e0f
+get http://localhost:4004/executive/Transactions/a9ac2c87-7844-471a-bd09-7829e1850e0f
 
 ###create Transactions
 
-POST http://localhost:4004/executive/Transections HTTP/1.1
+POST http://localhost:4004/executive/Transactions HTTP/1.1
 Content-Type: application/json
 
 {
@@ -131,7 +129,7 @@ Content-Type: application/json
 }
 
 ### Transection Update
-PATCH  http://localhost:4004/executive/Transections/89192335-30a9-4e21-9b21-839934101bff HTTP/1.1
+PATCH  http://localhost:4004/executive/Transactions/89192335-30a9-4e21-9b21-839934101bff HTTP/1.1
 Content-Type: application/json
 
 {
@@ -194,7 +192,7 @@ Content-Type: application/json
                 "Balance" : 45,
                 "account_status" : "Active",
                 "account_type" : "Savings",
-                "transections" : [
+                "transactions" : [
                     {
                         "type" : "Deposit",
                         "description" : "Check Deposit",
@@ -207,7 +205,7 @@ Content-Type: application/json
                 "Balance" : 45,
                 "account_status" : "Active",
                 "account_type" : "Current",
-                "transections" : [
+                "transactions" : [
                     {
                         "type" : "withdraw",
                         "description" : "Check Deposit",
@@ -230,7 +228,7 @@ Content-Type: application/json
                 "Balance" : 45,
                 "account_status" : "Active",
                 "account_type" : "Savings",
-                "transections" : [
+                "transactions" : [
                     {
                         "type" : "Deposit",
                         "description" : "Check Deposit",
@@ -243,7 +241,7 @@ Content-Type: application/json
                 "Balance" : 45,
                 "account_status" : "Active",
                 "account_type" : "Current",
-                "transections" : [
+                "transactions" : [
                     {
                         "type" : "withdraw",
                         "description" : "Check Deposit",

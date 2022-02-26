@@ -2,7 +2,7 @@ const cds = require('@sap/cds')
 const { Accounts } = cds.entities
 
 module.exports = cds.service.impl((srv)=> { 
-     srv.before('CREATE', 'Transections', _beforeTransection)
+     srv.before('CREATE', 'Transactions', _beforeTransection)
 })
  async function _beforeTransection(req) {
      

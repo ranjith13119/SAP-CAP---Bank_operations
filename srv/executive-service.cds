@@ -42,12 +42,13 @@ service EmployeeService @(requires: 'authenticated-user' ) {
         customers.lastname ,
         customers.bank.bankID,
         customers.bank.bankname,
+        customers.phone,
         message,
         createdAt,
-        transections,
+        transactions,
         customers
     } ;
 
-    @readonly entity Transections @(restrict: [ { grant: 'READ', to: 'employee', where: 'bankID = $user.bankID' }])
-    as projection on my.Transections;
+    @readonly entity Transactions @(restrict: [ { grant: 'READ', to: 'employee', where: 'bankID = $user.bankID' }])
+    as projection on my.Transactions;
 }

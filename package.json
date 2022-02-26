@@ -6,7 +6,7 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
-    "@sap/cds": "^3",
+    "@sap/cds": "^4",
     "express": "^4"
   },
   "scripts": {
