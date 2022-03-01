@@ -30,9 +30,23 @@ modules:
       - capbankopereationaccountsdetails.zip
       name: capbankopereationaccountsdetails
       target-path: resources/
+    - artifacts:
+      - capfecapfe.zip
+      name: capfecapfe
+      target-path: resources/
 - name: capbankopereationaccountsdetails
   type: html5
   path: app/accounts_details
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: capfecapfe
+  type: html5
+  path: app/cap_fe
   build-parameters:
     build-result: dist
     builder: custom

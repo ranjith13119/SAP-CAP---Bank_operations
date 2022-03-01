@@ -11,10 +11,10 @@
         "description": "{{appDescription}}",
         "dataSources": {
             "mainService": {
-                "uri": "/executive/",
+                "uri": "executive/",
                 "type": "OData",
                 "settings": {
-                    "odataVersion": "2.0"
+                    "odataVersion": "4.0"
                 }
             }
         },
@@ -97,96 +97,16 @@
                     "type": "Component",
                     "id": "AccountsList",
                     "name": "sap.fe.templates.ListReport",
-                    "list" : true,
-                    "settings": {
-                        "filterSettings": {
-                            "historySettings": {
-                                "historyEnabled": "Enabled"
-                            }
-                        },
-                        "smartVariantManagement": true,
-
-                        "quickVariantSelectionX": {
-                            "showCounts": true,   
-                            "entitySet": "Accounts",                         
-                            "variants": {
-                                "0": {
-                                    "key": "_tab1",
-                                    "entitySet": "Accounts",
-                                    "annotationPath": "com.sap.vocabularies.UI.v1.SelectionVariant#DefaultSelectionVariant"
-                                }, 
-                                "1" : {
-                                    "key": "_tab2",
-                                    "entitySet": "Accounts",
-                                    "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#DefaultVariant"
-                                }
-                            }
-                        }
-                    },
                     "options": {
                         "settings": {
                             "entitySet": "Accounts",
-                            "variantManagement": true,
+                            "variantManagement": "Page",
                             "navigation": {
                                 "Accounts": {
                                     "detail": {
                                         "route": "AccountsObjectPage"
                                     }
                                 }
-                            },
-                            "tableSettings": {
-                                "enableExport": true,
-                                "condensedTableLayout": true,
-                                "selectAll": true,
-                                "type": "ResponsiveTable",
-                                "selectionMode": "Multi",
-                                "multiEdit": {
-                                    "enabled": true,
-                                    "annotationPath": "com.sap.vocabularies.UI.v1.FieldGroup#MultiEdit"
-                                },
-                                "smartVariantManagement": true,
-                                "variantManagementHidden": false,
-                                "enableTableFilterInPageVariant": true,
-                                "subTitleIfVariantMgmtHidden": "{{subTitleIfVariantMgmtHidden}}",
-                                "createWithParameterDialog": {
-                                    "fields": {
-                                        "AccountId": {
-                                            "path": "accountid"
-                                        },
-                                        "AccoutType": {
-                                            "path": "account_type"
-                                        },
-                                        "AccountStatus": {
-                                            "path": "account_status"
-                                        },
-                                        "CustomerId": {
-                                            "path": "custID"
-                                        }
-                                    }
-                                },
-                                "creationMode": {
-                                    "createAtEnd": true,
-                                    "name": "NewPage"
-                                },
-                                "personalization": {
-                                    "column": true,
-                                    "filter": true,
-                                    "sort": true
-                                }
-                            },
-                            "actions": {
-                                "DataFieldForAction::Detail": {
-                                    "enableOnSelect": "single"
-                                }
-                            },
-                            "columns": {
-                                "DataFieldForAnnotation::FieldGroup::BankDetail": {
-                                    "availability": "Default"
-                                }
-                            },
-                            "initialLoad": "Enabled",
-                            "views": {
-                                "showCounts": true
                             }
                         }
                     }
@@ -205,14 +125,15 @@
                                     }
                                 }
                             },
-                            "variantManagement": true,
+                            "variantManagement": "Control",
                             "editableHeaderContent": true,
                             "showRelatedApps": true,
                             "content": {
                                 "header": {
                                     "visible": true
                                 }
-                            }
+                            },
+                            "sectionLayout": "Tabs"
                         }
                     }
                 },
@@ -225,7 +146,7 @@
                             "entitySet": "Transactions",
                             "navigation": {},
                             "editableHeaderContent": false,
-                            "variantManagement": true,
+                            "variantManagement": "Control",
                             "showRelatedApps": true,
                             "content": {
                                 "header": {
@@ -246,9 +167,6 @@
                                         "DataField::type": {
                                             "availability": "Default"
                                         }
-                                    },
-                                    "tableSettings": {
-                                        "condensedTableLayout": true
                                     }
                                 }
                             }

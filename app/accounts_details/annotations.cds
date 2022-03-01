@@ -5,6 +5,7 @@ annotate service.Accounts with @(
         InsertRestrictions     : {Insertable : true},
         DeleteRestrictions     : {Deletable : true},
         UpdateRestrictions     : {
+            Updatable          : true,
             $Type              : 'Capabilities.UpdateRestrictionsType',
             RequiredProperties : [
                 account_status,
@@ -61,8 +62,7 @@ annotate service.Accounts with @(
             account_type,
             custID,
             firstname,
-            lastname,
-            createdAt
+            lastname
         ],
         FieldGroup #BankDetail                          : {Data : [
             {
@@ -81,6 +81,18 @@ annotate service.Accounts with @(
                 Label : '{i18n>emp.BankStatus}'
             }
         ]},
+        FieldGroup #PersonalDetail                      : {Data : [
+            {
+                $Type : 'UI.DataField',
+                Value : firstname,
+                Label : '{i18n>emp.BankID}'
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : lastname,
+                Label : '{i18n>emp.BankName}'
+            }
+        ]},
         HeaderInfo                                      : { // Table Header info
             TypeName       : '{i18n>acc.AccountHeader}',
             TypeNamePlural : '{i18n>acc.AccountHeaderPlural}',
@@ -88,8 +100,8 @@ annotate service.Accounts with @(
                 $Type : 'UI.DataField',
                 Value : accountid
             },
-            TypeImageUrl : 'https://media.wired.com/photos/5b899992404e112d2df1e94e/master/pass/trash2-01.jpg',
-            Description : {
+            TypeImageUrl   : 'https://media.wired.com/photos/5b899992404e112d2df1e94e/master/pass/trash2-01.jpg',
+            Description    : {
                 $Type : 'UI.DataField',
                 Value : firstname,
             }
@@ -139,7 +151,7 @@ annotate service.Accounts with @(
             ],
             Label : 'City Details'
         },
-        FieldGroup #MultiEdit                           : { // the grop to update in the list report applicatio. Have to enbale the same in settings
+        FieldGroup #MultiEdit                           : { // the group to update in the list report applicatio. Have to enbale the same in settings
             Data  : [
                 {
                     $Type : 'UI.DataField',
@@ -152,7 +164,7 @@ annotate service.Accounts with @(
             ],
             Label : 'City Details'
         },
-        QuickViewFacets                                 : [ // showing records as grouped in dialog
+        QuickViewFacets                                 : [ // showing records as grouped in the filter dialog
             {
                 $Type  : 'UI.ReferenceFacet',
                 Label  : 'Main Contact Person',
@@ -164,84 +176,52 @@ annotate service.Accounts with @(
                 Target : '@UI.DataPoint#FilterLink     '
             }
         ],
-        DataPoint #FilterLink                           : {Value : phone, },
+        DataPoint #FilterLink                           : {Value : phone},
         DataPoint #Activity                             : {
-            Value         : 'activity',
-            TargetValue   : 5,
+            Value         : customers.activity,
+            TargetValue   : 4,
             Visualization : #Rating
         },
         LineItem                                        : [ // Table
             {
-                $Type             : 'UI.DataField',
-                Value             : accountid,
+                $Type             : 'UI.DataFieldForAnnotation',
+                Target            : '@UI.FieldGroup#BankDetail',
+                Label             : 'Bank information',
                 ![@UI.Importance] : #High,
-                Label             : '{i18n>acc.AccountID}'
+            },
+            {
+                $Type             : 'UI.DataFieldForAnnotation',
+                Target            : '@UI.FieldGroup#PersonalDetail',
+                Label             : 'Name',
+                ![@UI.Importance] : #High,
             },
             {
                 $Type             : 'UI.DataField',
                 Value             : account_type,
-                ![@UI.Importance] : #High,
+                ![@UI.Importance] : #Low,
                 Label             : '{i18n>acc.AccountType}'
-            },
-            {
-                $Type             : 'UI.DataFieldForAnnotation',
-                Target            : 'customers/@Communication.Contact',
-                ![@UI.Importance] : #High,
-                Label             : '{i18n>acc.CustomerID}'
-            },
-            {
-                $Type             : 'UI.DataField',
-                Value             : 'https://media.wired.com/photos/5b899992404e112d2df1e94e/master/pass/trash2-01.jpg',
-                ![@UI.Importance] : #High
-            },
-            {
-                $Type             : 'UI.DataField',
-                Value             : firstname,
-                ![@UI.Importance] : #High,
-                Label             : '{i18n>acc.FirstName}'
-            },
-            {
-                $Type             : 'UI.DataField',
-                Value             : lastname,
-                ![@UI.Importance] : #High,
-                Label             : '{i18n>acc.LastName}'
             },
             {
                 $Type             : 'UI.DataField',
                 Value             : balance,
                 ![@UI.Importance] : #High,
-                Criticality       : balance,
+                Criticality       : customers.activity,
                 Label             : '{i18n>acc.Balance}'
             },
             {
-                $Type  : 'UI.DataFieldForAnnotation',
-                Label  : 'Recent Avtivity',
-                Target : '@UI.DataPoint#Activity'
+                $Type             : 'UI.DataFieldForAnnotation',
+                Label             : 'Recent Avtivity',
+                Target            : '@UI.DataPoint#Activity',
+                ![@UI.Importance] : #High,
             },
             {
-                $Type  : 'UI.DataFieldForAnnotation',
-                Target : '@UI.FieldGroup#BankDetail',
-                Label  : 'Bank information'
-            },
-            {
-                $Type : 'UI.DataFieldWithUrl',
-                Url   : 'https://github.com/ranjith13119/SAP-CAP---Bank_operations.git',
-                Value : 'Bank-Git Repo',
-                Label : 'Repository'
-            },
-            {
-                $Type              : 'UI.DataFieldForAction', // will appear at the top table header
-                Label              : '{i18n>TriggerAction}',
-                Action             : 'ExecutiveService.EntityContainer/triggerAction',
-                InvocationGrouping : #Isolated
-            },
-            {
-                $Type          : 'UI.DataFieldForIntentBasedNavigation',
-                Label          : 'Intenet Based Navigation',
-                SemanticObject : 'Customer',
-                Action         : 'Detail',
-                Inline         : false
-            },
+                $Type             : 'UI.DataFieldForIntentBasedNavigation',
+                Label             : 'Intenet Based Navigation',
+                SemanticObject    : 'Customer',
+                Action            : 'Detail',
+                ![@UI.Importance] : #High,
+                Inline            : false
+            }
         ]
     }
 );
@@ -255,13 +235,7 @@ annotate service.Customers with @(
         Label : 'City Using Field Group'
     },
     Communication.Contact : {
-        fn    : {$edmJson : {
-            $Apply    : [
-                'firstname',
-                'lastname'
-            ],
-            $Function : 'odata.concat',
-        }, },
+        fn    : firstname,
         tel   : [
             {
                 type : #fax,
@@ -386,7 +360,7 @@ annotate service.Transactions with @(
         },
         DataPoint #Aggregated                : {
             Title         : '{@i18n>@accountActivity}',
-            Value         : activity,
+            Value         : accounts.customers.activity,
             TargetValue   : 4,
             Visualization : #Rating
         },
@@ -579,7 +553,6 @@ annotate service.Transactions with @(
                 Label             : '{i18n>acc.method}'
             }
         ],
-
         SelectionVariant #SimpleFilter       : {
             Text          : 'Net Transaction less than 10000',
             SelectOptions : [{
@@ -621,6 +594,249 @@ annotate service.Transactions with @(
 
     }
 );
+
 annotate service.Accounts with {
     createdAt @Common.Label : '{i18n>CreatedAt}'
 };
+
+annotate service.Accounts with {
+    accountid @Common.Label : 'Account ID'
+};
+
+annotate service.Accounts with @(
+    UI.HeaderFacets                       : [
+        {
+            $Type  : 'UI.ReferenceFacet',
+            Target : '@UI.FieldGroup#AccountDetail_accounts',
+            Label  : '{i18n>emp.HeaderFacetAccount}',
+            ID     : 'AccountsDetail'
+        },
+        {
+            $Type  : 'UI.ReferenceFacet',
+            Target : '@UI.FieldGroup#Balance_account',
+            Label  : '{i18n>emp.AccountBalance}',
+            ID     : 'Balance'
+        },
+        {
+            $Type  : 'UI.ReferenceFacet',
+            Target : '@UI.FieldGroup#CustomerDetail_account',
+            Label  : '{i18n>emp.HeaderFacetCustomer}',
+            ID     : 'Customer'
+        },
+        {
+            $Type  : 'UI.ReferenceFacet',
+            Target : '@UI.FieldGroup#BankDetail_account',
+            Label  : '{i18n>emp.HeaderFacetBank}',
+            ID     : 'Bank'
+        }
+    ],
+    UI.FieldGroup #TestForm               : {
+        $Type : 'UI.FieldGroupType',
+        Data  : [
+            {
+                $Type : 'UI.DataField',
+                Value : firstname,
+                Label : 'firstname',
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : lastname,
+                Label : 'lastname',
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : state_ID,
+                Label : 'state_ID',
+            },
+        ]
+    },
+    UI.FieldGroup #AccountDetail_accounts : {
+        $Type : 'UI.FieldGroupType',
+        Data  : [
+            {
+                $Type : 'UI.DataField',
+                Value : account_type,
+                Label : '{i18n>emp.AccountType}'
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : account_status,
+                Label : '{i18n>emp.AccountStatus}'
+            }
+        ],
+        Label : '{@i18n>emp.accountDetailheader}'
+    },
+    FieldGroup #Balance_account           : {
+        Data  : [{
+            $Type : 'UI.DataField',
+            Value : balance,
+            Label : '{i18n>emp.Balance}'
+        }],
+        Label : '{@i18n>emp.Balance}'
+    },
+    FieldGroup #CustomerDetail_account    : {
+        Data  : [
+            {
+                $Type : 'UI.DataField',
+                Value : firstname,
+                Label : '{i18n>emp.firstName}'
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : lastname,
+                Label : '{i18n>emp.LastName}'
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : custID,
+                Label : '{i18n>emp.Customerid}'
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : phone,
+                Label : '{i18n>emp.ContactInfo}'
+            },
+        ],
+        Label : '{@i18n>emp.Customer Details}'
+    },
+    FieldGroup #BankDetail_account        : {
+        Data  : [
+            {
+                $Type : 'UI.DataField',
+                Value : bankID,
+                Label : '{i18n>emp.BankID}'
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : bankname,
+                Label : '{i18n>emp.BankName}'
+            }
+        ],
+        Label : '{@i18n>emp.BankDetails}'
+    },
+    UI.LineItem #Transaction              : [
+        {
+            $Type             : 'UI.DataField',
+            Value             : accountid,
+            ![@UI.Importance] : #High,
+            Label             : '{i18n>acc.AccountID}'
+        },
+        {
+            $Type             : 'UI.DataField',
+            Value             : transactions.date,
+            ![@UI.Importance] : #High,
+            Label             : '{i18n>acc.Date}'
+        },
+        {
+            $Type             : 'UI.DataField',
+            Value             : transactions.amount,
+            ![@UI.Importance] : #High,
+            Label             : '{i18n>acc.amount}'
+        },
+        {
+            $Type             : 'UI.DataField',
+            Value             : transactions.type,
+            ![@UI.Importance] : #High,
+            Label             : '{i18n>acc.method}'
+        }
+    ],
+    UI.FieldGroup #CustomerInfo_detail    : {
+        $Type : 'UI.FieldGroupType',
+        Label : 'Customer Information',
+        Data  : [
+            {
+                $Type : 'UI.DataField',
+                Value : firstname,
+                Label : 'First Name: '
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : lastname,
+                Label : 'Last Name: '
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : customers.age,
+                Label : 'Age: '
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : customers.dateOfBirth,
+                Label : 'DOB: '
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : customers.address,
+                Label : 'Address: '
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : state.name,
+                Label : 'State: '
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : city.name,
+                Label : 'City: '
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : phone,
+                Label : 'Phone No.: '
+            },
+            {
+                $Type  : 'UI.DataFieldForAnnotation',
+                Label  : 'Communication Information',
+                Target : 'customers/@Communication.Contact'
+            }
+        ]
+    },
+
+
+    UI.Facets                             : [
+        {
+            $Type  : 'UI.ReferenceFacet',
+            Label  : 'Customer Information',
+            ID     : 'TestForm',
+            Target : '@UI.FieldGroup#CustomerInfo_detail',
+        },
+        {
+            $Type  : 'UI.ReferenceFacet',
+            Label  : 'Bank Information',
+            ID     : 'bankForm',
+            Target : '@UI.FieldGroup#BankInfo_detail',
+        },
+        {
+            $Type  : 'UI.ReferenceFacet',
+            Label  : 'Transaction',
+            ID     : 'Transaction',
+            Target : '@UI.LineItem#Transaction',
+        }
+    ],
+    UI.FieldGroup #BankInfo_detail        : {
+        $Type : 'UI.FieldGroupType',
+        Label : 'Bank Information',
+        Data  : [
+            {
+                $Type : 'UI.DataField',
+                Value : bankID,
+                Label : 'Bank ID: '
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : bankname,
+                Label : 'Bank Name: '
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : city.name,
+                Label : 'City: '
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : state.name,
+                Label : 'State: '
+            }
+        ]
+    },
+);

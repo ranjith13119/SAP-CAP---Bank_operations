@@ -29,8 +29,8 @@
     },
     "cds": {
         "requires": {
-            "db": {
-                "kind": "sql"
+            "--db": {
+                "kind": "hana"
             }
         },
         "hana": {
@@ -41,6 +41,7 @@
         }
     },
     "sapux": [
-        "app/accounts_details"
+        "app/accounts_details",
+        "app/cap_fe"
     ]
 }

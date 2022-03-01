@@ -66,6 +66,7 @@ entity Customers : managed {
         message     : String(50) default 'Customer Created Successfully';
         accounts    : Composition of many Accounts
                           on accounts.customers = $self @Validation.Maximum : 2  @Validation.Minimum : 1;
+        activity             : Integer;
 }
 
 entity Accounts : managed {
@@ -77,13 +78,13 @@ entity Accounts : managed {
         message              : String(50) default 'Account Created Successfully';
         transactions         : Composition of many Transactions
                                    on transactions.accounts = $self;
-        activity             : Integer;
 }
 
 entity Transactions : cuid {
-    key accounts    : Association to Accounts;
+    key transactionsId : Integer;
+    accounts    : Association to Accounts;
         type        : Transaction_type;
         description : String(100);
-        date        : DateTime @cds.on.update : $now;
+        date        : Date @cds.on.update : $now;
         amount      : Integer;
 }
