@@ -62,7 +62,8 @@ annotate service.Accounts with @(
             account_type,
             custID,
             firstname,
-            lastname
+            lastname,
+            customers_custID
         ],
         FieldGroup #BankDetail                          : {Data : [
             {
@@ -840,3 +841,6 @@ annotate service.Accounts with @(
         ]
     },
 );
+annotate service.Accounts with {
+    customers @Common.Label : 'customers_custID'
+};

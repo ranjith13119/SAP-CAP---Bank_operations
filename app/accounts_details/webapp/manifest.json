@@ -97,7 +97,7 @@
                     "type": "Component",
                     "id": "AccountsList",
                     "name": "sap.fe.templates.ListReport",
-                    "list" : true,
+                    "list": true,
                     "settings": {
                         "filterSettings": {
                             "historySettings": {
@@ -105,17 +105,16 @@
                             }
                         },
                         "smartVariantManagement": true,
-
                         "quickVariantSelectionX": {
-                            "showCounts": true,   
-                            "entitySet": "Accounts",                         
+                            "showCounts": true,
+                            "entitySet": "Accounts",
                             "variants": {
                                 "0": {
                                     "key": "_tab1",
                                     "entitySet": "Accounts",
                                     "annotationPath": "com.sap.vocabularies.UI.v1.SelectionVariant#DefaultSelectionVariant"
-                                }, 
-                                "1" : {
+                                },
+                                "1": {
                                     "key": "_tab2",
                                     "entitySet": "Accounts",
                                     "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#DefaultVariant"
@@ -211,6 +210,19 @@
                             "content": {
                                 "header": {
                                     "visible": true
+                                },
+                                "body": {
+                                    "sections": {
+                                        "customsection": {
+                                            "template": "cap.bankopereation.accountsdetails.ext.fragment.custom_Action",
+                                            "position": {
+                                                "anchor": "TestForm",
+                                                "placement": "After"
+                                            },
+                                            "type": "XMLFragment",
+                                            "title": "Custom Fragment"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -246,9 +258,6 @@
                                         "DataField::type": {
                                             "availability": "Default"
                                         }
-                                    },
-                                    "tableSettings": {
-                                        "condensedTableLayout": true
                                     }
                                 }
                             }
