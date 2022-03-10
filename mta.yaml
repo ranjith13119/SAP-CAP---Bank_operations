@@ -9,7 +9,6 @@ modules:
     requires:
       - name: bank_tasks---db
       - name: bank_tasks-uaa
-      - name: bank_tasks-dest-srv
     provides:
       - name: srv-api
         properties:
@@ -20,7 +19,7 @@ modules:
       builder: npm-ci
   - name: bank_tasks-app-content  #UI deployer
     type: com.sap.application.content
-    path: app
+    path: .
     requires:
       - name: bank_tasks-repo-host
         parameters:
@@ -122,7 +121,7 @@ resources:
                 Type: HTTP
                 URL: ~{srv-api/srv-url}
                 HTML5.ForwardAuthToken: true
-            existing_destinations_policy: ignore
+            existing_destinations_policy: update
         version: 1.0.0
       service: destination
       service-name: bank_tasks-dest-srv
