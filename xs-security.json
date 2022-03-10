@@ -1,0 +1,47 @@
+{
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.customer",
+      "description": "customer"
+    },
+    {
+      "name": "$XSAPPNAME.employee",
+      "description": "employee"
+    }
+  ],
+  "attributes": [
+    {
+      "name": "bankID",
+      "description": "bankID",
+      "valueType": "s",
+      "valueRequired": false
+    }
+  ],
+  "role-templates": [
+    {
+      "name": "customer",
+      "description": "generated",
+      "scope-references": [
+        "$XSAPPNAME.customer"
+      ],
+      "attribute-references": []
+    },
+    {
+      "name": "employee",
+      "description": "generated",
+      "scope-references": [
+        "$XSAPPNAME.employee"
+      ],
+      "attribute-references": []
+    },
+    {
+      "name": "userattributes",
+      "description": "generated",
+      "default-role-name": "Attributes of a User",
+      "scope-references": [],
+      "attribute-references": [
+        "bankID"
+      ]
+    }
+  ]
+}

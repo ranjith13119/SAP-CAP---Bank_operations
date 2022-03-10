@@ -1,0 +1,31 @@
+### Deposit or Widthdra Money
+POST http://localhost:4004/Customer/accountTransaction HTTP/1.1
+Content-Type: application/json
+
+{ 
+    "Id" : "1000000000000002",
+    "type" : "withdraw", 
+    "amount" : 5400000000000000, 
+    "description": "Salary"
+}
+
+### 
+POST http://localhost:4004/Customer/accountTransaction HTTP/1.1
+Content-Type: application/json
+
+{ 
+    "Id" : "1000000000000002",
+    "type" : "deposit", 
+    "amount" : 540000, 
+    "description": "Salary"
+}
+
+### Update Message Details
+
+POST http://localhost:4004/Customer/cancelMessage HTTP/1.1
+Content-Type: application/json
+
+{
+    "ID" : "202",
+    "confirmation": true
+}

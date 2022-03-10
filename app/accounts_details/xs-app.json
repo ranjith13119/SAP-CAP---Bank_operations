@@ -17,8 +17,9 @@
         {
             "source": "^/executive/(.*)$",
             "target": "/v2/executive/$1",
-            "destination": "odata",
-            "csrfProtection": false
+            "destination": "bank_tasks-srv-api",
+            "authenticationType": "xsuaa",
+            "csrfProtection" : false
         },
         {
             "source": "^(.*)$",

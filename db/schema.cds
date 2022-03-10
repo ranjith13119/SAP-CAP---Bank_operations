@@ -52,39 +52,39 @@ entity Banks : managed {
 }
 
 entity Customers : managed {
-    key custID      : Integer                           @assert.unique;
-        firstname   : localized String(50);
-        lastname    : localized String(50);
-        age         : Integer;
-        dateOfBirth : Date;
-        bank        : Composition of Banks;
-        address     : localized String(500);
-        state       : Composition of State;
-        city        : Composition of City;
-        phone       : Integer;
-        status      : Status default 'Processing';
-        message     : String(50) default 'Customer Created Successfully';
-        accounts    : Composition of many Accounts
-                          on accounts.customers = $self @Validation.Maximum : 2  @Validation.Minimum : 1;
-        activity             : Integer;
+    key custID        : Integer                           @assert.unique;
+        firstname     : localized String(50);
+        lastname      : localized String(50);
+        age           : Integer;
+        dateOfBirth   : Date;
+        bank          : Composition of Banks;
+        address       : localized String(500);
+        state         : Composition of State;
+        city          : Composition of City;
+        phone         : Integer;
+        status        : Status default 'Processing';
+        message       : String(50) default 'Customer Created Successfully';
+        accounts      : Composition of many Accounts
+                            on accounts.customers = $self @Validation.Maximum : 2  @Validation.Minimum : 1;
+        activity      : Integer;
+        messageActive : Boolean;
 }
 
 entity Accounts : managed {
-    key accountid            : Integer64 @assert.unique;
-        customers            : Association to Customers;
-        account_type         : Acc_type default 'Savings';
-        balance              : Integer;
-        account_status       : Status default 'Processing';
-        message              : String(50) default 'Account Created Successfully';
-        transactions         : Composition of many Transactions
-                                   on transactions.accounts = $self;
+    key accountid      : Integer64 @assert.unique;
+        customers      : Association to Customers;
+        account_type   : Acc_type default 'Savings';
+        balance        : Integer;
+        account_status : Status default 'Processing';
+        message        : String(50) default 'Account Created Successfully';
+        transactions   : Composition of many Transactions
+                             on transactions.accounts = $self;
 }
 
 entity Transactions : cuid {
-    key transactionsId : Integer;
     accounts    : Association to Accounts;
-        type        : Transaction_type;
-        description : String(100);
-        date        : Date @cds.on.update : $now;
-        amount      : Integer;
+    type        : Transaction_type;
+    description : String(100);
+    date        : Date @cds.on.update : $now;
+    amount      : Integer;
 }

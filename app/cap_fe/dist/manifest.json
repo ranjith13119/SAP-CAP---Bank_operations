@@ -25,6 +25,10 @@
             "version": "1.0.0"
         }
     },
+    "sap.cloud": {
+        "public": true,
+        "service": "business.service"
+    },
     "sap.ui": {
         "technology": "UI5",
         "icons": {

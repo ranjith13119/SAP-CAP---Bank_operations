@@ -9,8 +9,9 @@ service ExecutiveService {
          customers.phone, customers.firstname, customers.lastname, 
          customers.state, customers.city, customers.bank.bankID, 
          customers.bank.bankname, message, createdAt, transactions, customers,
-         transactions.transactionsId
-    };
+         transactions.ID as transactionsId
+    } 
+    action deActivateAccount(ID : Integer64);   // Bound Action
 
     entity Transactions //@(restrict: [ { grant: '*', to: 'Manager'}])
     as projection on my.Transactions {

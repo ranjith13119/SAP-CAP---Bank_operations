@@ -1,7 +1,7 @@
 using { sap.capire.bank_details as my } from '../db/schema';
 
-service Customer @(requires: ['authenticated-user']) {
-
+// service Customer @(requires: ['authenticated-user']) {
+service Customer {
     entity Customers @(restrict: [ { grant: ['READ', 'UPDATE'], to: 'customer', where: 'custID = $user' }]) 
     as projection on my.Customers  {
         @readonly key custID,
@@ -24,8 +24,9 @@ service Customer @(requires: ['authenticated-user']) {
         message,
         city,
         bank,
-        phone
-    };
+        phone,
+        messageActive
+    } ;
     
     entity Accounts @(restrict: [ { grant: ['READ', 'UPDATE'], to: 'customer', where: 'custID = $user'}])
     as projection on my.Accounts{
@@ -48,8 +49,10 @@ service Customer @(requires: ['authenticated-user']) {
         customers
     };
 
-    entity Transactions @(restrict: [ { grant: ['READ', 'CREATE'], to: 'customer'}])
-    as projection on my.Transactions;
+    entity Transactions @(restrict: [ { grant: ['READ', 'CREATE'], to: 'customer'}]) 
+    as projection on my.Transactions { * , ID as transactionsId};
+    action cancelMessage(ID : String, confirmation : Boolean);
+    action accountTransaction(Id : Integer64, type : String, amount : Double, description: String)
 }
 
 annotate Customer.Accounts with @(
