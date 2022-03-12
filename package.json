@@ -1,56 +1,87 @@
 {
-    "name": "bank_tasks",
-    "version": "1.0.0",
-    "description": "A simple Full StacK APp using (Fiori Elements + CAP)project.",
-    "repository": "<Add your repository here>",
-    "license": "UNLICENSED",
-    "private": true,
-    "dependencies": {
-        "@sap/audit-logging": "^3.1.0",
-        "@sap/cds": "^5",
-        "@sap/cds-odata-v2-adapter-proxy": "^1.4.33",
-        "@sap/xsenv": "^3.0.0",
-        "@sap/xssec": "^3",
-        "@sap/node-jwt": "^1.6.15",
-        "express": "^4",
-        "hdb": "^0.18.3",
-        "passport": "^0",
-        "passport-http": "^0.3.0",
-        "twilio": "^3.75.1",
-        "@sap/logging": "^6.0.3",
-        "npx": "^10.2.2",
-        "cf-nodejs-logging-support": "6.12.0"
-    },
-    "devDependencies": {
-        "@sap/ux-specification": "^1.96.4",
-        "sqlite3": "^5.0.2"
-    },
-    "engines": {
-        "node": "^14"
-    },
-    "scripts": {
-        "start": "cds run",
-        "undeploy": "cf undeploy bank_tasks --delete-services --delete-service-keys"
-    },
-    "cds": {
-        "requires": {
-            "db": {
-                "kind": "hana"
-            },
-            "uaa": {
-                "kind": "xsuaa",
-                "credentials": {}
-            }
+  "name": "bank_tasks",
+  "version": "1.0.0",
+  "description": "A simple Full StacK APp using (Fiori Elements + CAP)project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@sap/audit-logging": "^3.1.0",
+    "@sap/cds": "^5",
+    "@sap/cds-odata-v2-adapter-proxy": "^1.4.33",
+    "@sap/logging": "^6.0.3",
+    "@sap/node-jwt": "^1.6.15",
+    "@sap/xsenv": "^3.0.0",
+    "@sap/xssec": "^3",
+    "cf-nodejs-logging-support": "6.12.0",
+    "express": "^4",
+    "hdb": "^0.18.3",
+    "helmet": "^5.0.1",
+    "npx": "^10.2.2",
+    "passport": "^0",
+    "passport-http": "^0.3.0",
+    "twilio": "^3.75.1"
+  },
+  "devDependencies": {
+    "@sap/ux-specification": "^1.96.4",
+    "sqlite3": "^5.0.2"
+  },
+  "engines": {
+    "node": "^14"
+  },
+  "scripts": {
+    "start": "cds run",
+    "undeploy": "cf undeploy bank_tasks --delete-services --delete-service-keys"
+  },
+  "cds": {
+    "requires": {
+      "db": {
+        "kind": "hana",
+        "[development]": {
+          "kind": "sql"
         },
-        "hana": {
-            "deploy-format": "hdbtable"
-        },
-        "features": {
-            "fiori_preview": true
+        "[production]": {
+          "kind": "hana",
+          "pool": {
+            "acquireTimeoutMillis": 5000,
+            "min": 0,
+            "max": 100,
+            "fifo": true
+          }
         }
+      },
+      "uaa": {
+        "kind": "xsuaa",
+        "credentials": {}
+      },
+      "auth": {
+        "[development]" : {
+            "kind": "dummy-auth"            
+        }
+      }
     },
-    "sapux": [
-        "app/accounts_details",
-        "app/cap_fe"
-    ]
+    "query": {
+      "limit": {
+        "default": 20,
+        "max": 100
+      }
+    },
+    "hana": {
+      "deploy-format": "hdbtable"
+    },
+    "features": {
+      "fiori_preview": true
+    },
+    "i18n": {
+      "folders": [
+        "_i18n",
+        "i18n",
+        " assets/i18n"
+      ]
+    }
+  },
+  "sapux": [
+    "app/accounts_details",
+    "app/cap_fe"
+  ]
 }

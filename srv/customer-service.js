@@ -1,8 +1,16 @@
 const cds = require('@sap/cds');
 const handler = require("./handler");
 
-module.exports = cds.service.impl((srv) => {
-    srv.on('accountTransaction', handler.transaction._commitTransaction);
-    srv.on("READ", "Transactions", handler.transaction.fetchTransactionDetails);
-    srv.on("cancelMessage", handler.transaction.setMessageDetails)
-});
+class Customer extends cds.ApplicationService {
+    init() {
+        // const { Transactions } = this.entities;
+        this.on('accountTransaction', handler.transaction._commitTransaction);
+        this.on("READ", "Transactions", handler.transaction.fetchTransactionDetails);
+        this.on("cancelMessage", handler.transaction.setMessageDetails)
+        return super.init();
+    }
+};
+
+module.exports = {
+    Customer
+};

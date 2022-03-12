@@ -1,7 +1,10 @@
 using { sap.capire.bank_details as my } from '../db/schema';
 
+@cds.query.limit.default: 20
+@cds.query.limit.max: 100
 // service Customer @(requires: ['authenticated-user']) {
 service Customer {
+    @cds.query.limit: 10
     entity Customers @(restrict: [ { grant: ['READ', 'UPDATE'], to: 'customer', where: 'custID = $user' }]) 
     as projection on my.Customers  {
         @readonly key custID,

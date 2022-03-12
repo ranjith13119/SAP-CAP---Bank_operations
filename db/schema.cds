@@ -42,8 +42,8 @@ entity City {
 }
 
 entity Banks : managed {
-    key bankID    : Integer    @assert.unique;
-        bankname  : String(100)@assert.unique;
+    key bankID    : Integer              @assert.unique;
+        bankname  : localized String(100)@assert.unique;
         state     : Composition of State;
         city      : Composition of City;
         status    : Status default 'Processing';
