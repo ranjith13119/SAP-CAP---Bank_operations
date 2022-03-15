@@ -389,14 +389,16 @@ annotate service.Transactions with @(
         Identification #Edit                 : [{
             $Type             : 'UI.DataFieldForAction',
             Label             : 'Edit',
-            Action            : 'ExecutiveService.EntityContainer/triggerAction',
+            Action            : 'ExecutiveService.triggerAction',
+            Inline            : true,
             ![@UI.Importance] : #High
         }],
         Identification #Copy                 : [{
             $Type             : 'UI.DataFieldForAction',
             Label             : 'Copy',
-            Action            : 'ExecutiveService.EntityContainer/triggerAction',
+            Action            : 'ExecutiveService.triggerAction',
             ![@UI.Importance] : #High,
+            Inline            : true,
             Criticality       : #Positive
         }],
         HeaderFacets                         : [
@@ -514,14 +516,14 @@ annotate service.Transactions with @(
             {
                 $Type              : 'UI.DataFieldForAction',
                 Label              : 'CWP',
-                Action             : 'ExecutiveService.EntityContainer/triggerAction',
+                Action             : 'ExecutiveService.triggerAction',
                 InvocationGrouping : #Isolated,
                 ![@UI.Importance]  : #High
             },
             {
                 $Type              : 'UI.DataFieldForAction',
                 Label              : 'Copy',
-                Action             : 'ExecutiveService.EntityContainer/triggerAction',
+                Action             : 'ExecutiveService.triggerAction',
                 Determining        : true,
                 InvocationGrouping : #Isolated,
                 ![@UI.Importance]  : #High
@@ -724,19 +726,19 @@ annotate service.Accounts with @(
         },
         {
             $Type             : 'UI.DataField',
-            Value             : transactions.date,
+            Value             : date,
             ![@UI.Importance] : #High,
             Label             : '{i18n>acc.Date}'
         },
         {
             $Type             : 'UI.DataField',
-            Value             : transactions.amount,
+            Value             : amount,
             ![@UI.Importance] : #High,
             Label             : '{i18n>acc.amount}'
         },
         {
             $Type             : 'UI.DataField',
-            Value             : transactions.type,
+            Value             : type,
             ![@UI.Importance] : #High,
             Label             : '{i18n>acc.method}'
         }
@@ -841,6 +843,7 @@ annotate service.Accounts with @(
         ]
     },
 );
+
 annotate service.Accounts with {
     customers @Common.Label : 'customers_custID'
 };

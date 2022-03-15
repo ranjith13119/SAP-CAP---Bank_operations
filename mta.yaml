@@ -9,6 +9,8 @@ modules:
     requires:
       - name: bank_tasks---db
       - name: bank_tasks-uaa
+      - name: bank_tasks-logging
+      - name: bank_tasks-dest
     provides:
       - name: srv-api
         properties:
@@ -17,6 +19,10 @@ modules:
       buildpack: nodejs_buildpack
     build-parameters:
       builder: npm-ci
+    properties:
+      ApplicationInterfaceKey: saptest0
+      APIKeyHubSandbox: Ejq7jB2i2ymKyx83OGOdZmVxQQpsV2kl
+      APIKeyNASA: DEMO_KEY
   - name: bank_tasks-app-content  #UI deployer
     type: com.sap.application.content
     path: .
@@ -97,7 +103,7 @@ resources:
   - name: bank_tasks---db
     type: com.sap.xs.hdi-container
     parameters:
-      service: hana
+      service: hana-trail
       service-plan: hdi-shared
     properties:
       hdi-service-name: ${service-name}
@@ -138,6 +144,34 @@ resources:
       config:
         xsappname: "bank_tasks-${space}"
         tenant-mode: dedicated
+  # ---------------- APPLICATION LOGGING SERVICE ---------------
+  - name: bank_tasks-logging
+  # ------------------------------------------------------------
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: application-logs
+      service-plan: lite
+
+  # -------------------- DESTINATION SERVICE -------------------
+  - name: bank_tasks-dest
+    # ------------------------------------------------------------
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: destination
+      service-plan: lite
+      config:
+        init_data:
+          instance:
+              existing_destinations_policy: ignore
+              destinations:
+                - Name: bank_tasks-NASA-api
+                  Description: NASA APIs
+                  URL: https://api.nasa.gov
+                  Type: HTTP
+                  ProxyType: Internet
+                  Authentication: NoAuthentication
+                  HTML5.DynamicDestination: true
+  
 parameters:
   deploy_mode: html5-repo
   enable-parallel-deployments: true
@@ -147,3 +181,5 @@ build-parameters:
       commands:
         - npm ci
         - npx -p @sap/cds-dk cds build --production
+#       - npx rimraf gen/db/src/gen/data # uncomment this line to prevent loading of initial data which is only relevant for dev/test deployments 
+#       - npx rimraf gen/db/src/gen/csv  # uncomment this line unless db/csv folder has been used for config/control table data which is entirely managed by the developer and never changed by the app

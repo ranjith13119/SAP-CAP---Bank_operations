@@ -20,7 +20,9 @@
     "npx": "^10.2.2",
     "passport": "^0",
     "passport-http": "^0.3.0",
-    "twilio": "^3.75.1"
+    "twilio": "^3.75.1",
+    "debug": "^4.3",
+    "cds-swagger-ui-express": "^0.1"
   },
   "devDependencies": {
     "@sap/ux-specification": "^1.96.4",
@@ -31,12 +33,12 @@
   },
   "scripts": {
     "start": "cds run",
+    "debug": "DEBUG=srv:* cds watch",
     "undeploy": "cf undeploy bank_tasks --delete-services --delete-service-keys"
   },
   "cds": {
     "requires": {
       "db": {
-        "kind": "hana",
         "[development]": {
           "kind": "sql"
         },
@@ -50,13 +52,31 @@
           }
         }
       },
-      "uaa": {
-        "kind": "xsuaa",
-        "credentials": {}
+      "[production]": {
+        "uaa": {
+          "kind": "xsuaa",
+          "credentials": {}
+        }
       },
       "auth": {
-        "[development]" : {
-            "kind": "dummy-auth"            
+        "[development]": {
+          "strategy": "mock"
+        },
+        "[production]": {
+          "strategy": "xsuaa-auth"
+        }
+      },
+      "NearEarthObjectWebService": {
+        "kind": "rest",
+        "impl": "srv/external/NearEarthObjectWebService.js",
+        "credentials": {
+          "[production]": {
+            "destination": "bank_tasks-NASA-api",
+            "path": "neo/rest/v1"
+          },
+          "[development]": {
+            "url": "https://api.nasa.gov/neo/rest/v1"
+          }
         }
       }
     },

@@ -1,5 +1,6 @@
 ### Deposit or Widthdra Money
 POST http://localhost:4004/Customer/accountTransaction HTTP/1.1
+Authorization: Basic Vinitha:
 Content-Type: application/json
 
 { 
@@ -11,6 +12,7 @@ Content-Type: application/json
 
 ### 
 POST http://localhost:4004/Customer/accountTransaction HTTP/1.1
+Authorization: Basic Vinitha:
 Content-Type: application/json
 
 { 
@@ -23,9 +25,15 @@ Content-Type: application/json
 ### Update Message Details
 
 POST http://localhost:4004/Customer/cancelMessage HTTP/1.1
+Authorization: Basic Vinitha:
 Content-Type: application/json
 
 {
     "ID" : "202",
     "confirmation": true
 }
+
+
+###
+GET http://localhost:4004/Customer/accountTransaction HTTP/1.1
+Authorization: Basic Vinitha:

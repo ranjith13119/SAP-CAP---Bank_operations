@@ -1,9 +1,14 @@
 const cds = require("@sap/cds");
 const { Banks, Customers, Accounts } = cds.entities;
+const log = require("cf-nodejs-logging-support");
+log.setLoggingLevel("info");
 
 module.exports = cds.service.impl((srv) => {
   srv.after("CREATE", "Banks", _afterCreationBank); // Just to print the created BankId
 
+  srv.on("triggerAction", async (req) => {
+    log.setSinkFunction("testing trigger action");
+  });
   //Create a Event to update the Status to "Active"
   srv.on(["CREATE"], ["Banks", "Accounts", "Customers"], async (req) => {
     let payloadKey = {};

@@ -9,7 +9,7 @@ service ExecutiveService {
          customers.phone, customers.firstname, customers.lastname, 
          customers.state, customers.city, customers.bank.bankID, 
          customers.bank.bankname, message, createdAt, transactions, customers,
-         transactions.ID as transactionsId
+         transactions.ID as transactionsId, transactions.date as date, transactions.amount as amount, transactions.type as type
     } 
     action deActivateAccount(ID : Integer64);   // Bound Action
 
@@ -381,19 +381,19 @@ service ExecutiveService {
                 },
                 {
                     $Type             : 'UI.DataField',
-                    Value             : transactions.date,
+                    Value             : date,
                     ![@UI.Importance] : #High,
                     Label             : '{i18n>acc.Date}'
                 },
                 {
                     $Type             : 'UI.DataField',
-                    Value             : transactions.amount,
+                    Value             : amount,
                     ![@UI.Importance] : #High,
                     Label             : '{i18n>acc.amount}'
                 },
                 {
                     $Type             : 'UI.DataField',
-                    Value             : transactions.type,
+                    Value             : type,
                     ![@UI.Importance] : #High,
                     Label             : '{i18n>acc.method}'
                 }

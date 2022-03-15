@@ -3,6 +3,10 @@ const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN;
 const cds = require("@sap/cds");
 const twilioClient = require("twilio")(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
 const { Accounts, Transactions, Customers } = cds.entities;
+const debug_customer = require("debug")("srv:customer-service"); // cf set-env bank_tasks-srv DEBUG 'srv:*' ==> to dubug on cf
+const log = require("cf-nodejs-logging-support");
+log.setLoggingLevel("info");
+log.registerCustomFields(["Account", "amount"]);
 
 const _commitTransaction = async (req) => {
   const { Id, amount, type, description } = req.data;
@@ -11,7 +15,7 @@ const _commitTransaction = async (req) => {
     const { messageActive } = await SELECT.from(Customers, [
       "messageActive",
     ]).where({
-      custID: req.user.attr.ID || "202", // "202" - only for testing
+      custID: req.user.attr.ID[0] || "202",
     });
     if (type == "withdraw") {
       const { accountBalance } = await SELECT.one
@@ -56,6 +60,9 @@ const _commitTransaction = async (req) => {
           ? console.log(`Message ${message.sid} has been delivered.`)
           : console.error(message);
       }
+
+      debug_customer(description, { Account: Id, amount: balance });
+      log.info(description, { Account: Id, amount: balance });
     }
     req._.req.res.send("TRANSACTION_SUCCESS");
   } else {
@@ -73,12 +80,13 @@ const twilioClientMessage = async (bodyMsg) => {
 
 const fetchTransactionDetails = async (req) => {
   console.log(process.env.TWILIO_ACCOUNT_SID);
+  debug_customer("Transaction customer ID", req.user.attr.ID);
   const { accountid } = await SELECT.one.from(Accounts, ["accountid"]).where({
-    customers_custID: req.user.attr.ID || "202", // setting the default user id as "202" for testing
+    customers_custID: req.user.attr.ID[0], // setting the default user id as "202" for testing
   });
 
   const trasactionData = await SELECT.from(Transactions).where({
-    accounts_accountid: accountid || "1000000000000002", // setting the default account Id as "1000000000000002" for testing
+    accounts_accountid: accountid,
   });
 
   return trasactionData;
@@ -96,8 +104,22 @@ const setMessageDetails = async (req) => {
   req._.req.res.send(sResMessage);
 };
 
+// Exposing the External API
+const fetchAsteroidsDetails = async (req) => {
+  const NeoWs = await cds.connect.to("NearEarthObjectWebService");
+  try {
+    const tx = NeoWs.transaction(req);
+    return await tx.send({
+      query: req.query,
+    });
+  } catch (err) {
+    req.reject(err);
+  }
+};
+
 module.exports = {
   _commitTransaction,
   fetchTransactionDetails,
   setMessageDetails,
+  fetchAsteroidsDetails
 };

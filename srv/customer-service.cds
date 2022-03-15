@@ -1,4 +1,5 @@
 using { sap.capire.bank_details as my } from '../db/schema';
+using {NearEarthObjectWebService} from './external/NearEarthObjectWebService.csn';
 
 @cds.query.limit.default: 20
 @cds.query.limit.max: 100
@@ -31,6 +32,9 @@ service Customer {
         messageActive
     } ;
     
+    @readonly
+    entity Asteroids @(restrict : [{to : 'customer'}])   as projection on NearEarthObjectWebService.Feed;
+
     entity Accounts @(restrict: [ { grant: ['READ', 'UPDATE'], to: 'customer', where: 'custID = $user'}])
     as projection on my.Accounts{
         @readonly key accountid,
