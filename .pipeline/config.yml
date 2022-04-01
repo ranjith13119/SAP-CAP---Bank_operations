@@ -1,0 +1,63 @@
+###
+# This file configures the project "Piper" pipeline of your project.
+# For a reference of the configuration concept and available options, please have a look into its documentation.
+#
+# The documentation for the most recent pipeline version can always be found at:
+#    https://sap.github.io/jenkins-library/
+#
+# This is a YAML-file. YAML is an indentation-sensitive file format. Please make sure to properly indent changes to it.
+###
+
+### General project setup
+general:
+    inferBuildTool: true
+    productiveBranch: 'master'
+
+### Step-specific configuration
+steps:
+    mavenExecute:
+        dockerImage: devxci/mbtci:1.0.14
+
+    artifactPrepareVersion:
+        versioningType: cloud_noTag
+
+    npmExecuteLint:
+        failOnError: false # true, if you want your pipeline to fail, if the lint check reveals any errors
+
+    # Release stage steps
+    cloudFoundryDeploy: # only relevant, if you set the cloudFoundryDeploy parameter in the Release stage to true
+        mtaDeployParameters: "-f --version-rule ALL"
+
+    tmsUpload: # only relevant, if you set the tmsUpload parameter in the Release stage to true
+        nodeName: "QA"
+        credentialsId: "tms-sk"
+
+### Stage-specific configuration
+stages:
+    "Confirm":
+        manualConfirmation: false
+    Build:
+        mavenExecuteStaticCodeChecks: false # true, if you want to execute static code checks to verify the syntax of your Java code
+        npmExecuteLint: true # true, if you want to run a lint check that verifies the syntax of your JavaScript code
+
+    Additional Unit Tests:
+        karmaExecuteTests: false # true, if you want to execute the Karma Test Runner (default: false)
+        npmExecuteScripts: false # true, if you want to execute test scripts that are defined in step npmExecuteScripts
+
+    Acceptance:
+        cloudFoundryDeploy: false
+        cfApiEndpoint: "https://api.cf.us10.hana.ondemand.com" # for example, https://api.cf.eu10.hana.ondemand.com
+        cfOrg: "b749bb60trial"
+        cfSpace: "QA" # the Cloud Foundry space, in which you want to execute uiVeri5 tests
+        cfAppName: "bank_tasks"
+        cfCredentialsId: "btp-qa"
+        uiVeri5ExecuteTests: false # true, if you want to execute uiVeri5 tests (default:false)
+
+    Release:
+        cloudFoundryDeploy: true # true, if you want to deploy to Cloud Foundry (default: false)
+        cfApiEndpoint: "https://api.cf.us10.hana.ondemand.com" # for example, https://api.cf.eu10.hana.ondemand.com
+        cfOrg: "b749bb60trial"
+        cfSpace: "QA" # enter the Cloud Foundry space, to which you want to deploy your application
+        cfAppName: "bank_tasks"
+        cfCredentialsId: "btp-qa"
+        tmsUpload: true # true, if you want to upload your artifact to SAP Cloud Transport Management (default: false)

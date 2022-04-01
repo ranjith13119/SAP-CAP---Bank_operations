@@ -22,6 +22,7 @@ cds.on("bootstrap", (app) =>
       diagram: "true",
     })
   )
+ 
 );
 
 module.exports = cds.server;

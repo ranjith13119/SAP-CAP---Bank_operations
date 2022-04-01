@@ -5,6 +5,7 @@ class NearEarthObjectWebService extends cds.RemoteService {
         this.reject(['CREATE', 'UPDATE', 'DELETE'], '*');
 
         this.before('READ', '*', async (req) => {
+            console.log("test");
             try {
                 let today = new Date().toISOString().split('T')[0];
                 req.query = 'GET /feed?api_key=' + process.env.APIKeyNASA + '&start_date=' + today + '&end_date=' + today;
