@@ -21,7 +21,7 @@ modules:
       builder: npm-ci
     properties:
       ApplicationInterfaceKey: saptest0
-      APIKeyHubSandbox: Ejq7jB2i2ymKyx83OGOdZmVxQQpsV2kl
+      APIKeyHubSandbox: xxx
       APIKeyNASA: DEMO_KEY
   - name: bank_tasks-app-content  #UI deployer
     type: com.sap.application.content
