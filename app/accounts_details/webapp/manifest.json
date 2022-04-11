@@ -121,7 +121,7 @@
                             }
                         },
                         "smartVariantManagement": true,
-                        "quickVariantSelectionX": {
+                        "quickVariantSelectionX": { // multiple Views on a List Report
                             "showCounts": true,
                             "entitySet": "Accounts",
                             "variants": {
@@ -154,16 +154,16 @@
                                 "condensedTableLayout": true,
                                 "selectAll": true,
                                 "type": "ResponsiveTable",
-                                "selectionMode": "Multi",
-                                "multiEdit": {
+                                "selectionMode": "Multi",   // type: "StandardList"
+                                "multiEdit": {      // mass edit
                                     "enabled": true,
-                                    "annotationPath": "com.sap.vocabularies.UI.v1.FieldGroup#MultiEdit"
+                                    "annotationPath": "com.sap.vocabularies.UI.v1.FieldGroup#MultiEdit" // only supported in responsive table
                                 },
                                 "smartVariantManagement": true,
                                 "variantManagementHidden": false,
                                 "enableTableFilterInPageVariant": true,
                                 "subTitleIfVariantMgmtHidden": "{{subTitleIfVariantMgmtHidden}}",
-                                "createWithParameterDialog": {
+                                "createWithParameterDialog": {  // Create fields on dialog
                                     "fields": {
                                         "AccountId": {
                                             "path": "accountid"
