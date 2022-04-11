@@ -141,14 +141,7 @@
                     "options": {
                         "settings": {
                             "entitySet": "Accounts",
-                            "variantManagement": true,
-                            "navigation": {
-                                "Accounts": {
-                                    "detail": {
-                                        "route": "AccountsObjectPage"
-                                    }
-                                }
-                            },
+                            "variantManagement": true,                            
                             "tableSettings": {
                                 "enableExport": true,
                                 "condensedTableLayout": true,
@@ -187,16 +180,6 @@
                                     "column": true,
                                     "filter": true,
                                     "sort": true
-                                }
-                            },
-                            "actions": {
-                                "DataFieldForAction::Detail": {
-                                    "enableOnSelect": "single"
-                                }
-                            },
-                            "columns": {
-                                "DataFieldForAnnotation::FieldGroup::BankDetail": {
-                                    "availability": "Default"
                                 }
                             },
                             "initialLoad": "Enabled",
