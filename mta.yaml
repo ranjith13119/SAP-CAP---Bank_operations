@@ -173,7 +173,6 @@ resources:
                   HTML5.DynamicDestination: true
   
 parameters:
-  deploy_mode: html5-repo
   enable-parallel-deployments: true
 build-parameters:
   before-all:
