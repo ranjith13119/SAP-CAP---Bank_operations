@@ -63,7 +63,9 @@ annotate service.Accounts with @(
             custID,
             firstname,
             lastname,
-            customers_custID
+            customers_custID,
+            activity,
+            date
         ],
         FieldGroup #BankDetail                          : {Data : [
             {
@@ -846,4 +848,10 @@ annotate service.Accounts with @(
 
 annotate service.Accounts with {
     customers @Common.Label : 'customers_custID'
+};
+annotate service.Accounts with {
+    activity @Common.Label : 'activity'
+};
+annotate service.Accounts with {
+    date @Common.Label : 'date'
 };
