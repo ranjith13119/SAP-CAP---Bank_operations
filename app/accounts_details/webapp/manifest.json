@@ -120,27 +120,24 @@
                 "historyEnabled": "Enabled"
               }
             },
-            "smartVariantManagement": true,
-            "quickVariantSelectionX": {
-              "showCounts": true,
-              "entitySet": "Accounts",
-              "variants": {
-                "0": {
-                  "key": "_tab1",
-                  "entitySet": "Accounts",
-                  "annotationPath": "com.sap.vocabularies.UI.v1.SelectionVariant#DefaultSelectionVariant"
-                },
-                "1": {
-                  "key": "_tab2",
-                  "entitySet": "Accounts",
-                  "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#DefaultVariant"
-                }
-              }
-            }
+            "smartVariantManagement": true
           },
           "options": {
             "settings": {
               "entitySet": "Accounts",
+              "views": {
+                  "paths": [
+                      {
+                          "key": "_tab1",
+                          "annotationPath": "com.sap.vocabularies.UI.v1.SelectionVariant#DefaultSelectionVariant"
+                      },
+                      {
+                          "key": "_tab2",
+                         "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#DefaultVariant"
+                      }
+                  ],
+                  "showCounts": true
+              },
               "variantManagement": true,
               "navigation": {
                 "Accounts": {
