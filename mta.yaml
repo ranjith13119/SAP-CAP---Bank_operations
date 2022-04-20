@@ -1,6 +1,6 @@
 _schema-version: "3.1"
 ID: bank_tasks
-description: A simple Full StacK APp using (Fiori Elements + CAP)project.
+description: A simple Full StacK Fiori APP using SAP CAP Architecture.
 version: 1.0.0
 modules:
   - name: bank_tasks-srv  #service module
