@@ -73,7 +73,9 @@
     "models": {
       "@i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
-        "uri": "i18n/i18n.properties"
+        "uri": "i18n/i18n.properties",
+        "supportedLocales": ["en"],
+        "fallbackLocale": "en"
       },
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
